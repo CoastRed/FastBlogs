@@ -19,11 +19,11 @@
         </Border.Background>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="180"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 35 0 0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="15 35 0 0">
                     <Border CornerRadius="10" Width="50" Height="50">
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
@@ -34,20 +34,20 @@
                         <TextBlock Text="B" Foreground="#ffffff" FontSize="35" FontWeight="SemiBold"
                                    TextAlignment="Center" VerticalAlignment="Center" Margin="0"/>
                     </Border>
-                    <StackPanel Margin="30 0 0 0" VerticalAlignment="Center">
+                    <StackPanel Margin="10 0 0 0" VerticalAlignment="Center">
                         <TextBlock Text="Fast Blogs" FontSize="15" Margin="0 0 0 5" Foreground="#c2cfff"/>
                         <TextBlock Text="Beta 0.1" FontSize="15" Foreground="#7788bf"/>
                     </StackPanel>
                 </StackPanel>
                 <Separator Height="0.8" Margin="20 30" Background="#56558a"/>
-                
-                <RadioButton Style="{StaticResource menuRadioButton}">
+
+                <RadioButton Style="{StaticResource menuRadioButton}" Command="{Binding NavigateCommand}" CommandParameter="UploadFileView">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="Home" Style="{StaticResource menuButtonIcon}"/>
                         <TextBlock Text="发布博客" Style="{StaticResource menuButtonText}"/>
                     </StackPanel>
                 </RadioButton>
-                <RadioButton Style="{StaticResource menuRadioButton}">
+                <RadioButton Style="{StaticResource menuRadioButton}"  Command="{Binding NavigateCommand}" CommandParameter="UploadImgView">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="Blog" Style="{StaticResource menuButtonIcon}"/>
                         <TextBlock Text="图片上传" Style="{StaticResource menuButtonText}"/>

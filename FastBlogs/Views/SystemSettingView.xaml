@@ -13,7 +13,8 @@
         </Grid.RowDefinitions>
         <TextBlock Text="系统配置界面" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="25" Foreground="#409eff"/>
         <WrapPanel Grid.Row="1" Margin="25">
-            <Button Content="用户信息配置" Margin="10" Padding="10" Style="{StaticResource buttonStyle}" Width="Auto" Height="Auto"/>
+            <Button Content="用户信息配置" Padding="15 10" Style="{StaticResource buttonStyle}" Width="Auto" Height="Auto"
+                    Command="{Binding SetUserInfoCommand}"/>
         </WrapPanel>
     </Grid>
 </UserControl>
