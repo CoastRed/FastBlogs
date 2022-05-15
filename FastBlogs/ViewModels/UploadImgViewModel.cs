@@ -1,4 +1,5 @@
 ﻿using MetaWeblogAPI;
+using NLog;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
@@ -17,6 +18,7 @@ namespace FastBlogs.ViewModels
     {
 
         private readonly BlogOperation blogOperation;
+        private readonly ILogger logger;
 
 
         #region 属性
@@ -89,9 +91,10 @@ namespace FastBlogs.ViewModels
 
         #region 构造函数
 
-        public UploadImgViewModel(BlogOperation blogOperation)
+        public UploadImgViewModel(BlogOperation blogOperation, ILogger logger)
         {
             this.blogOperation = blogOperation;
+            this.logger = logger;
         }
 
         #endregion
@@ -159,11 +162,20 @@ namespace FastBlogs.ViewModels
         /// <param name="filePath"></param>
         public async Task UploadImage(string filePath)
         {
+            FileInfo fileInfo = new FileInfo(filePath);
+            List<string> imgTypes = new List<string>() { ".jpg", ".png", ".gif", ".icon" };
+            if (!imgTypes.Contains(fileInfo.Extension.ToLower()))
+            {
+                this.logger.Info($"{filePath}文件不是图片类型");
+                this.Progress = 0;
+                return;
+            }
             this.Message = string.Empty;
             this.Progress = 50;
             await Task.Delay(100);
             string url = this.blogOperation.NewMediaObject(filePath).url;
             System.Windows.Clipboard.SetText(url);
+            this.logger.Info($"上传{filePath}图片成功，URL为{url}");
             this.Progress = 100;
             this.Message = "上传成功，已复制到剪贴板";
         }

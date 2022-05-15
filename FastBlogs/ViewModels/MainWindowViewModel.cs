@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using FastBlogs.Views;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
@@ -45,6 +46,15 @@ namespace FastBlogs.ViewModels
                     Application.Current.Shutdown();
                 });
             }
+        }
+
+        #endregion
+
+        #region 方法
+
+        public void Configure()
+        {
+            this.regionManager.Regions["MainWindowRegion"].RequestNavigate(nameof(UploadFileView));
         }
 
         #endregion

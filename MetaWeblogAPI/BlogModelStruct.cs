@@ -12,6 +12,7 @@ namespace MetaWeblogAPI
         public string blogid;
         public string url;
         public string blogName;
+
     }
 
     [XmlRpcMissingMapping(MappingAction.Ignore)]
@@ -99,5 +100,12 @@ namespace MetaWeblogAPI
     public struct UrlData
     {
         public string url;
+    }
+
+    
+    public struct fault
+    {
+        public int faultCode;
+        public string faultString;
     }
 }

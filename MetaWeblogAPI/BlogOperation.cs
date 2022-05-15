@@ -24,8 +24,20 @@ namespace MetaWeblogAPI
             this.proxy = (IMetaWeblog)XmlRpcProxyGen.Create(typeof(IMetaWeblog));
             XmlRpcClientProtocol cp = (XmlRpcClientProtocol)proxy;
             cp.Url = url;
-            //cp.Url = "https://rpc.cnblogs.com/metaweblog/xcoast";
-            this.blogid = this.GetUsersBlogs(string.Empty, this.username, this.password)[0].blogid;
+            this.Connection();
+        }
+
+        /// <summary>
+        /// 测试连接
+        /// </summary>
+        /// <exception cref="ArgumentException"></exception>
+        public void Connection()
+        {
+            if (string.IsNullOrEmpty(this.username) || string.IsNullOrEmpty(this.password))
+            {
+                throw new ArgumentException("博客用户名或密码无效");
+            }
+            this.blogid = this.GetUsersBlogs(string.Empty, this.username, this.password)?[0].blogid;
         }
 
         /// <summary>
@@ -35,26 +47,32 @@ namespace MetaWeblogAPI
         /// <param name="username">用户名</param>
         /// <param name="password">密码</param>
         /// <returns></returns>
-        public BlogInfo[] GetUsersBlogs(string appKey, string username, string password)
+        public BlogInfo[]? GetUsersBlogs(string appKey, string username, string password)
         {
-            return proxy.GetUsersBlogs(appKey, username, password);
+            object obj = proxy.GetUsersBlogs(appKey, username, password);
+            if (obj is BlogInfo[])
+            {
+                return (BlogInfo[])obj;
+            }
+            if (obj is fault)
+            {
+                throw new Exception(((fault)obj).faultString);
+            }
+            return null;
         }
 
-        //public UrlData NewMediaObject(string filePath)
-        //{
-        //    FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read); //将图片以文件流的形式进行保存
-        //    BinaryReader br = new BinaryReader(fs);
-        //    byte[] imgBytesIn = br.ReadBytes((int)fs.Length); //将流读入到字节数组中
-        //    return this.NewMediaObject(filePath, imgBytesIn);
-        //}
-
+        /// <summary>
+        /// 上传媒体文件
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public UrlData NewMediaObject(string filePath)
         {
             if (string.IsNullOrEmpty(this.blogid) || string.IsNullOrEmpty(this.username) || string.IsNullOrEmpty(this.password))
             {
                 throw new ArgumentException("博客Id、用户名或密码无效");
             }
-
             byte[] fileBytes = File.ReadAllBytes(filePath);
             string name = new FileInfo(filePath).Name;
             string type = MimeMapping.GetMimeMapping(filePath);
@@ -67,6 +85,7 @@ namespace MetaWeblogAPI
             };
             return this.proxy.newMediaObject(this.blogid, this.username, this.password, data);
         }
+
 
     }
 }

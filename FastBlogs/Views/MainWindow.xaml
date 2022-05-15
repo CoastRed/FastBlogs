@@ -41,7 +41,7 @@
                 </StackPanel>
                 <Separator Height="0.8" Margin="20 30" Background="#56558a"/>
 
-                <RadioButton Style="{StaticResource menuRadioButton}" Command="{Binding NavigateCommand}" CommandParameter="UploadFileView">
+                <RadioButton IsChecked="True" Style="{StaticResource menuRadioButton}" Command="{Binding NavigateCommand}" CommandParameter="UploadFileView">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="Home" Style="{StaticResource menuButtonIcon}"/>
                         <TextBlock Text="发布博客" Style="{StaticResource menuButtonText}"/>
